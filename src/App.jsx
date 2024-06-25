@@ -2,19 +2,25 @@ import React, { useState } from 'react'
 import Player from './assets/components/Player';
 import GameBoard from './assets/components/GameBoard';
 import Log from './assets/components/Log.jsx';
+import { WINNING_COMBINATIONS } from './assets/components/winning-combinations.js';
 
+function deriveActivePLayer(gameTurns){
+  let currentPlayer='X';
+  if(gameTurns.length>0&&gameTurns[0].player==='X'){
+    return currentPlayer;
+  }
+}
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  const [activePlayer, setActivePlayer] = useState('X');
+
+  const activePlayer=deriveActivePLayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex) {
     setActivePlayer((curActiveplayer) => curActiveplayer === 'X' ? 'O' : 'X');
     setGameTurns((prevTurns) => {
         let currentPlayer = 'X';
 
-        if (prevTurns.length > 0 && prevTurns[0].player === 'X') {
-            currentPlayer = 'O';
-        }
+      
 
         const updatedTurns = [
             {
@@ -37,7 +43,7 @@ function App() {
       turns={gameTurns}
       />
     </div>
-    <Log />
+    <Log turns={gameTurns}/>
   </main>
 
 

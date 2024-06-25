@@ -1,41 +1,38 @@
 import React, { useState } from 'react';
 
+// Başlangıç oyun tahtası, 3x3'lük bir matris
 const initialGameBoard = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
 ];
 
-export default function GameBoard({onSelectSquare,turns}) {
-    let gameBoard=initialGameBoard;
+export default function GameBoard({ onSelectSquare, turns }) {
+    // Oyun tahtasını başlangıç oyun tahtasıyla başlatıyoruz
+    let gameBoard = initialGameBoard;
 
-    for(const turn of turns){
-        const {square,player}=turn;
-        const {row,col}=square;
+    // Her hamle için oyun tahtasını güncelliyoruz
+    for (const turn of turns) {
+        const { square, player } = turn;
+        const { row, col } = square;
 
-        gameBoard[row][col]=player;
+        // Belirtilen satır ve sütuna oyuncu simgesini ekliyoruz
+        gameBoard[row][col] = player;
     }
-    /*{
-        const [gameBoard, setGameBoard] = useState(initialGameBoard);
-    
-    function handleSelectSquare(rowIndex, colIndex) {
-        setGameBoard((prevGameBoard) => {
-            const updatedBoard = [...prevGameBoard.map(innerArray => [...innerArray])];
-            updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
-            return updatedBoard;
-        });
-        onSelectSquare();
-    }
-    }*/
-     
+
+    // Render işlemi
     return (
         <ol id="game-board">
+            {/* Her satır için bir <li> oluşturuyoruz */}
             {gameBoard.map((row, rowIndex) => (
                 <li key={rowIndex}>
                     <ol>
+                        {/* Her sütun için bir <li> ve <button> oluşturuyoruz */}
                         {row.map((playerSymbol, colIndex) => (
                             <li key={colIndex}>
-                                <button onClick={()=>onSelectSquare(rowIndex,colIndex)}>
+                                {/* Kareye tıklandığında onSelectSquare fonksiyonunu çağırıyoruz */}
+                                <button onClick={() => onSelectSquare(rowIndex, colIndex)} disabled={playerSymbol!==null}>
+                                    {/* Karedeki oyuncu simgesini gösteriyoruz */}
                                     {playerSymbol}
                                 </button>
                             </li>
